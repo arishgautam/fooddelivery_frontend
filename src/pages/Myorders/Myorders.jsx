@@ -9,7 +9,6 @@ const Myorders = () => {
   const [data, setData] = useState([]);
 
   const fetchOrders = async () => {
-    console.log("Fetch Orders");
     const response = await axios.post(
       url + "/api/order/userorders",
       {},

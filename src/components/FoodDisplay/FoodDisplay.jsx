@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 
 const FoodDisplay = ({ category }) => {
   const { food_list } = useContext(StoreContext);
-  console.log(food_list[0]?.image);
 
   return (
     <div className="food-display" id="food-display">
