@@ -4,7 +4,9 @@ import './Placeorder.css'
 import { StoreContext } from '../../context/StoreContext'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+
 const Placeorder = () => {
+  
 
   const { getTotalCartAmount, token, food_list, cartItems, url } = useContext(StoreContext)
 
@@ -50,15 +52,21 @@ const Placeorder = () => {
   //     alert("Error");
   //   }
   // }
+  const [totalAmount, setTotalAmount] = useState();
+  useEffect(() => {
+    setTotalAmount(getTotalCartAmount() + 200)
+
+  }, [])
+
 
   //! Esewa Khalti Integration
   const [orders, setOrders] = useState([]);
 
   const handlePayment = async (payment_method) => {
-    const url = "http://localhost:4000/api/orders/create";
+    const url = `${BASE_URL}api/orders/create`;
     const data = {
-      amount: 100,
-      products: [{ product: "test", amount: 100, quantity: 1 }],
+      amount: totalAmount,
+      products: [{ product: "test", totalAmount: totalAmount, quantity: 1 }],
       payment_method,
     };
     // const data = {
@@ -120,7 +128,7 @@ const Placeorder = () => {
 
   useEffect(() => {
     const getOrders = async () => {
-      const url = "http://localhost:4000/api/orders";
+      const url = `${BASE_URL}api/orders`;
 
       try {
         const response = await fetch(url, {
@@ -207,27 +215,27 @@ const Placeorder = () => {
             <div>
               <div className="cart-total-details">
                 <p>Subtotal</p>
-                <p>${getTotalCartAmount()}</p>
+                <p>Rs. {getTotalCartAmount()}</p>
               </div>
               <hr />
 
               <div className="cart-total-details">
                 <p>Delivery fee</p>
-                <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
+                <p>Rs. {getTotalCartAmount() === 0 ? 0 : 200}</p>
               </div>
               <hr />
 
               <div className="cart-total-details">
                 <b>Total</b>
-                <b>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</b>
+                <b>Rs. {getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 200}</b>
               </div>
             </div>
-          <button
-            style={{ background: "#55aa33", margin: 10 }}
-            onClick={() => handlePayment("esewa")}
-          >
-            Handle Esewa Payment
-          </button>
+            <button
+              style={{ background: "#55aa33", margin: 10 }}
+              onClick={() => handlePayment("esewa")}
+            >
+              Handle Esewa Payment
+            </button>
           </div>
         </div>
       </form>
