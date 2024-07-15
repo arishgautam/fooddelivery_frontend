@@ -55,12 +55,17 @@ const Placeorder = () => {
   const [orders, setOrders] = useState([]);
 
   const handlePayment = async (payment_method) => {
-    const url = "http://localhost:5005/api/orders/create";
+    const url = "http://localhost:4000/api/orders/create";
     const data = {
       amount: 100,
       products: [{ product: "test", amount: 100, quantity: 1 }],
       payment_method,
     };
+    // const data = {
+    //   amount: getTotalCartAmount() + 2,
+    //   products: [{ product: "test", amount: 100, quantity: 1 }],
+    //   payment_method,
+    // };
 
     try {
       const response = await fetch(url, {
@@ -115,7 +120,7 @@ const Placeorder = () => {
 
   useEffect(() => {
     const getOrders = async () => {
-      const url = "http://localhost:5005/api/orders";
+      const url = "http://localhost:4000/api/orders";
 
       try {
         const response = await fetch(url, {
@@ -129,7 +134,7 @@ const Placeorder = () => {
         // Check if the request was successful (status code 2xx)
         if (response.ok) {
           const responseData = await response.json();
-          console.log(responseData);
+          // console.log(responseData);
           setOrders(responseData);
         } else {
           console.error(
@@ -145,24 +150,24 @@ const Placeorder = () => {
     getOrders();
   }, []);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!token) {
-      navigate('/cart')
-    }
-    else if (getTotalCartAmount() === 0) {
-      navigate('/cart')
-    }
-  }, [token])
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate('/cart')
+  //   }
+  //   else if (getTotalCartAmount() === 0) {
+  //     navigate('/cart')
+  //   }
+  // }, [token])
 
   return (
+    <>
+      <form className='place-order'>
+        <div className="place-order-left">
+          <p className="title">Delivery Information</p>
 
-    <form className='place-order'>
-      <div className="place-order-left">
-        <p className="title">Delivery informtion</p>
-        
-        <h1>Esewa Test</h1>
+          {/* <h1>Esewa Test</h1>
         <button
           style={{ background: "#55aa33", margin: 10 }}
           onClick={() => handlePayment("esewa")}
@@ -174,53 +179,59 @@ const Placeorder = () => {
           onClick={() => handlePayment("khalti")}
         >
           Handle Khalti Payment
-        </button>
-        <div className="multi-fields">
-          <input required name='firstName' onChange={onChangeHandler} value={data.firstName} type="text" placeholder='First Name' />
-          <input required name='lastName' onChange={onChangeHandler} value={data.lastName} type="text" placeholder='Last name' />
-        </div>
-
-        <input required name='email' onChange={onChangeHandler} value={data.email} type="email" placeholder='Email address' />
-        <input required name='street' onChange={onChangeHandler} value={data.street} type="text" placeholder='Street' />
-
-        <div className="multi-fields">
-          <input required name='city' onChange={onChangeHandler} value={data.city} type="text" placeholder='City' />
-          <input required name='state' onChange={onChangeHandler} value={data.state} type="text" placeholder='State' />
-        </div>
-
-        <div className="multi-fields">
-          <input required name='zipcode' onChange={onChangeHandler} value={data.zipcode} type="text" placeholder='Zip code' />
-          <input required name='country' onChange={onChangeHandler} value={data.country} type="text" placeholder='Country' />
-        </div>
-
-        <input required name='phone' onChange={onChangeHandler} value={data.phone} type="text" placeholder='Phone' />
-      </div>
-
-      <div className="place-order-right">
-        <div className="cart-total">
-          <h2>Cart total</h2>
-          <div>
-            <div className="cart-total-details">
-              <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
-            </div>
-            <hr />
-
-            <div className="cart-total-details">
-              <p>Delivery fee</p>
-              <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
-            </div>
-            <hr />
-
-            <div className="cart-total-details">
-              <b>Total</b>
-              <b>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</b>
-            </div>
+        </button> */}
+          <div className="multi-fields">
+            <input required name='firstName' onChange={onChangeHandler} value={data.firstName} type="text" placeholder='First Name' />
+            <input required name='lastName' onChange={onChangeHandler} value={data.lastName} type="text" placeholder='Last name' />
           </div>
-          <button type='submit'>PROCEED TO Payment</button>
+
+          <input required name='email' onChange={onChangeHandler} value={data.email} type="email" placeholder='Email address' />
+          <input required name='street' onChange={onChangeHandler} value={data.street} type="text" placeholder='Street' />
+
+          <div className="multi-fields">
+            <input required name='city' onChange={onChangeHandler} value={data.city} type="text" placeholder='City' />
+            <input required name='state' onChange={onChangeHandler} value={data.state} type="text" placeholder='State' />
+          </div>
+
+          <div className="multi-fields">
+            <input required name='zipcode' onChange={onChangeHandler} value={data.zipcode} type="text" placeholder='Zip code' />
+            <input required name='country' onChange={onChangeHandler} value={data.country} type="text" placeholder='Country' />
+          </div>
+
+          <input required name='phone' onChange={onChangeHandler} value={data.phone} type="text" placeholder='Phone' />
         </div>
-      </div>
-    </form>
+
+        <div className="place-order-right">
+          <div className="cart-total">
+            <h2>Cart total</h2>
+            <div>
+              <div className="cart-total-details">
+                <p>Subtotal</p>
+                <p>${getTotalCartAmount()}</p>
+              </div>
+              <hr />
+
+              <div className="cart-total-details">
+                <p>Delivery fee</p>
+                <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
+              </div>
+              <hr />
+
+              <div className="cart-total-details">
+                <b>Total</b>
+                <b>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</b>
+              </div>
+            </div>
+          <button
+            style={{ background: "#55aa33", margin: 10 }}
+            onClick={() => handlePayment("esewa")}
+          >
+            Handle Esewa Payment
+          </button>
+          </div>
+        </div>
+      </form>
+    </>
   )
 }
 
