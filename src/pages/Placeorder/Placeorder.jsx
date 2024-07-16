@@ -6,7 +6,6 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 const Placeorder = () => {
-  
 
   const { getTotalCartAmount, token, food_list, cartItems, url } = useContext(StoreContext)
 
@@ -63,7 +62,7 @@ const Placeorder = () => {
   const [orders, setOrders] = useState([]);
 
   const handlePayment = async (payment_method) => {
-    const url = `${BASE_URL}api/orders/create`;
+    const url = `${url}api/orders/create`;
     const data = {
       amount: totalAmount,
       products: [{ product: "test", totalAmount: totalAmount, quantity: 1 }],
@@ -128,7 +127,7 @@ const Placeorder = () => {
 
   useEffect(() => {
     const getOrders = async () => {
-      const url = `${BASE_URL}api/orders`;
+      const url = `${url}api/orders`;
 
       try {
         const response = await fetch(url, {
