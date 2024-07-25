@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom'
 const Placeorder = () => {
 
   const { getTotalCartAmount, token, food_list, cartItems, url } = useContext(StoreContext)
-
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -61,8 +60,9 @@ const Placeorder = () => {
   //! Esewa Khalti Integration
   const [orders, setOrders] = useState([]);
 
+  console.log(url)
   const handlePayment = async (payment_method) => {
-    const url = `${url}api/orders/create`;
+    const URL = `${url}api/orders/create`;
     const data = {
       amount: totalAmount,
       products: [{ product: "test", totalAmount: totalAmount, quantity: 1 }],
@@ -75,7 +75,7 @@ const Placeorder = () => {
     // };
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -127,10 +127,10 @@ const Placeorder = () => {
 
   useEffect(() => {
     const getOrders = async () => {
-      const url = `${url}api/orders`;
+      const URL = `${url}api/orders`;
 
       try {
-        const response = await fetch(url, {
+        const response = await fetch(URL, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
